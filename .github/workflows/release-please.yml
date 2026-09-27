@@ -1,0 +1,19 @@
+name: Release Please
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    uses: unmango/actions/.github/workflows/release-please.yml@3ec4ed5a6af9c00f6a39e079df488573c77ebda6 # v1.0.1
+    with:
+      config-file: release-please-config.json
+      manifest-file: .release-please-manifest.json
+    secrets:
+      token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
