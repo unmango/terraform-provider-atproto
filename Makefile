@@ -21,7 +21,7 @@ format fmt:
 	nix fmt
 
 docs generate:
-	tfplugindocs generate
+	tfplugindocs generate --provider-name atproto
 
 tidy: go.sum nix/gomod2nix.toml
 

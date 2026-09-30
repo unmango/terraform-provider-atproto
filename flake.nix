@@ -80,6 +80,12 @@
             "docs/resources/**"
             "docs/guides/**"
           ];
+
+          # Import examples are shell fragments that tfplugindocs copies into the
+          # docs verbatim, so they carry no shebang.
+          treefmt.settings.formatter.shellcheck.excludes = [
+            "examples/**/import.sh"
+          ];
         };
     };
 }
