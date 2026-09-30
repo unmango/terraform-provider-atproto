@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: unmango/actions/setup-nix@3ec4ed5a6af9c00f6a39e079df488573c77ebda6 # v1.0.1
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: DeterminateSystems/magic-nix-cache-action@84c0677f58dcedf3b91f8223ce36a9ea5b3c84b7 # v15
+
+      - run: nix flake check
+      - run: nix build .#
+      - run: nix develop -c golangci-lint run ./...
+      - run: nix develop -c go tool ginkgo run -r --github-output
+
+  codegen:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: unmango/actions/setup-nix@3ec4ed5a6af9c00f6a39e079df488573c77ebda6 # v1.0.1
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: DeterminateSystems/magic-nix-cache-action@84c0677f58dcedf3b91f8223ce36a9ea5b3c84b7 # v15
+
+      - run: nix develop -c make docs
+      - run: git diff --exit-code -- docs
