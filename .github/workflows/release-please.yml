@@ -15,5 +15,8 @@ jobs:
     with:
       config-file: release-please-config.json
       manifest-file: .release-please-manifest.json
+      # An app token rather than GITHUB_TOKEN, whose tags don't start the
+      # goreleaser workflow.
+      app-client-id: ${{ vars.RELEASE_APP_CLIENT_ID }}
     secrets:
-      token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+      app-private-key: ${{ secrets.RELEASE_APP_PRIVATE_KEY }}
