@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.1.1](https://github.com/unmango/terraform-provider-atproto/compare/v0.1.0...v0.1.1) (2026-10-27)
+
+
+### Bug Fixes
+
+* **renovate:** preset syntax ([#7](https://github.com/unmango/terraform-provider-atproto/issues/7)) ([a770031](https://github.com/unmango/terraform-provider-atproto/commit/a77003113c2c14514e212981853ded1ac26a9bb4))
+
+
+### Documentation
+
+* credit entropitor/atproto and record why we rewrote it ([#6](https://github.com/unmango/terraform-provider-atproto/issues/6)) ([14766ba](https://github.com/unmango/terraform-provider-atproto/commit/14766bacd8e6d332bd7fb7f2311b88664e29d704))
+
 ## 0.1.0 (2026-10-27)
 
 
