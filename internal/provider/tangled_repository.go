@@ -190,7 +190,7 @@ func (r *tangledRepositoryResource) Create(ctx context.Context, req resource.Cre
 	ref, err := r.client.CreateRecord(ctx, repoCollection, rkey, compact(model.value()))
 	if err != nil {
 		resp.Diagnostics.AddError("Unable to Create Repository Record", err.Error())
-		if cleanup := knot.DeleteRepo(ctx, rkey, rkey); cleanup != nil {
+		if cleanup := knot.DeleteRepo(ctx, repoDID); cleanup != nil {
 			resp.Diagnostics.AddWarning("Unable to Clean Up Repository",
 				"The repository was created on the knot but its record was not. Deleting it again failed: "+cleanup.Error())
 		}
@@ -233,7 +233,7 @@ func (r *tangledRepositoryResource) Update(ctx context.Context, req resource.Upd
 
 	if branch := model.DefaultBranch; !branch.IsNull() && !branch.Equal(state.DefaultBranch) {
 		knot := r.client.Knot(knotDomain(model.Knot.ValueString()))
-		if err := knot.SetDefaultBranch(ctx, state.URI.ValueString(), branch.ValueString()); err != nil {
+		if err := knot.SetDefaultBranch(ctx, state.RepoDID.ValueString(), branch.ValueString()); err != nil {
 			resp.Diagnostics.AddError("Unable to Set Default Branch", err.Error())
 			return
 		}
@@ -263,7 +263,7 @@ func (r *tangledRepositoryResource) Delete(ctx context.Context, req resource.Del
 	}
 
 	knot := r.client.Knot(knotDomain(model.Knot.ValueString()))
-	if err := knot.DeleteRepo(ctx, model.Name.ValueString(), rkey); err != nil {
+	if err := knot.DeleteRepo(ctx, model.RepoDID.ValueString()); err != nil {
 		resp.Diagnostics.AddError("Unable to Delete Repository", err.Error())
 	}
 }
