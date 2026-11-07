@@ -115,18 +115,18 @@ func (k *Knot) CreateRepo(ctx context.Context, in CreateRepoInput) (string, erro
 	return out.RepoDID, nil
 }
 
-func (k *Knot) DeleteRepo(ctx context.Context, name, rkey string) error {
+// DeleteRepo deletes the repo the knot knows by repoDID. Knots refuse while the
+// owner's sh.tangled.repo record still exists, so delete the record first.
+func (k *Knot) DeleteRepo(ctx context.Context, repoDID string) error {
 	return k.procedure(ctx, "sh.tangled.repo.delete", map[string]any{
-		"did":  k.client.DID(),
-		"name": name,
-		"rkey": rkey,
+		"repo": repoDID,
 	}, nil)
 }
 
-// SetDefaultBranch changes the default branch of the repo whose record is at repoURI.
-func (k *Knot) SetDefaultBranch(ctx context.Context, repoURI, branch string) error {
+// SetDefaultBranch changes the default branch of the repo the knot knows by repoDID.
+func (k *Knot) SetDefaultBranch(ctx context.Context, repoDID, branch string) error {
 	return k.procedure(ctx, "sh.tangled.repo.setDefaultBranch", map[string]any{
-		"repo":          repoURI,
+		"repo":          repoDID,
 		"defaultBranch": branch,
 	}, nil)
 }

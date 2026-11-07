@@ -229,14 +229,25 @@ func (k *fakeKnot) serve(w http.ResponseWriter, r *http.Request) {
 		k.defaultBranch[did] = cmp.Or(str("defaultBranch"), "main")
 		writeJSON(w, map[string]any{"repoDid": did})
 
+	// Like the Rust knot, these name the repo by its DID, in "repo".
 	case "sh.tangled.repo.delete":
-		delete(k.repos, str("rkey"))
+		if str("repo") == "" {
+			xrpcError(w, http.StatusBadRequest, "InvalidRequest")
+			return
+		}
+		for rkey, did := range k.repos {
+			if did == str("repo") {
+				delete(k.repos, rkey)
+			}
+		}
 		writeJSON(w, map[string]any{})
 
 	case "sh.tangled.repo.setDefaultBranch":
-		// The repo is named by its record's AT URI.
-		rkey := str("repo")[strings.LastIndex(str("repo"), "/")+1:]
-		k.defaultBranch[k.repos[rkey]] = str("defaultBranch")
+		if !slices.Contains(slices.Collect(maps.Values(k.repos)), str("repo")) {
+			xrpcError(w, http.StatusBadRequest, "RepoNotFound")
+			return
+		}
+		k.defaultBranch[str("repo")] = str("defaultBranch")
 		writeJSON(w, map[string]any{})
 
 	case "sh.tangled.knot.addMember":
