@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.2](https://github.com/unmango/terraform-provider-atproto/compare/v0.1.1...v0.1.2) (2026-11-07)
+
+
+### Bug Fixes
+
+* name knot repos by repo DID on delete and default branch ([#18](https://github.com/unmango/terraform-provider-atproto/issues/18)) ([dc65be4](https://github.com/unmango/terraform-provider-atproto/commit/dc65be4de53a22a5603a9691c73020d594f3abfa))
+
 ## [0.1.1](https://github.com/unmango/terraform-provider-atproto/compare/v0.1.0...v0.1.1) (2026-10-27)
 
 
