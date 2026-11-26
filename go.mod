@@ -5,7 +5,7 @@ go 1.27
 tool github.com/onsi/ginkgo/v2/ginkgo
 
 require (
-	github.com/bluesky-social/indigo v0.0.0-20261106080107-a20146f0f81d
+	github.com/bluesky-social/indigo v0.0.0-20261126035822-0cd86484540e
 	github.com/hashicorp/terraform-plugin-framework v1.19.0
 	github.com/hashicorp/terraform-plugin-framework-jsontypes v0.2.0
 	github.com/hashicorp/terraform-plugin-framework-validators v0.19.0
